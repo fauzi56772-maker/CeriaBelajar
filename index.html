@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CeriaBelajar - Platform belajar interaktif menyenangkan untuk anak Indonesia usia TK sampai SD. Belajar huruf, angka, warna, puzzle, dan lebih banyak lagi!" />
+  <meta name="keywords" content="belajar anak, edukasi anak, game edukasi, belajar huruf, belajar angka, puzzle anak, TK SD Indonesia" />
+  <meta name="author" content="CeriaBelajar" />
+  <meta property="og:title" content="CeriaBelajar - Belajar Jadi Seru!" />
+  <meta property="og:description" content="Platform belajar interaktif khusus anak Indonesia usia TK sampai SD" />
+  <meta property="og:type" content="website" />
+  <title>CeriaBelajar 🌟 - Belajar Jadi Seru!</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body class="light-mode" id="app-body">
+
+  <!-- ========== CONFETTI CANVAS ========== -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- ========== AUDIO SYSTEM ========== -->
+  <div id="audio-system" aria-hidden="true"></div>
+
+  <!-- ========== HEADER ========== -->
+  <header class="main-header" id="main-header">
+    <div class="header-inner">
+      <!-- Logo -->
+      <div class="logo-wrap" onclick="showSection('home')" role="button" tabindex="0" aria-label="Ke Beranda">
+        <span class="logo-icon">🌟</span>
+        <span class="logo-text">Ceria<span class="logo-accent">Belajar</span></span>
+      </div>
+
+      <!-- Nav Desktop -->
+      <nav class="main-nav" id="main-nav" aria-label="Navigasi Utama">
+        <button class="nav-btn active" onclick="showSection('home')" data-section="home">🏠 Beranda</button>
+        <button class="nav-btn" onclick="showSection('puzzle')" data-section="puzzle">🧩 Puzzle</button>
+        <button class="nav-btn" onclick="showSection('huruf')" data-section="huruf">🔤 Huruf</button>
+        <button class="nav-btn" onclick="showSection('angka')" data-section="angka">🔢 Angka</button>
+        <button class="nav-btn" onclick="showSection('warna')" data-section="warna">🎨 Warna</button>
+        <button class="nav-btn" onclick="showSection('tebak')" data-section="tebak">🖼️ Tebak Gambar</button>
+        <button class="nav-btn" onclick="showSection('hitung')" data-section="hitung">➕ Hitung</button>
+        <button class="nav-btn" onclick="showSection('cocok')" data-section="cocok">🔗 Cocokkan</button>
+      </nav>
+
+      <!-- Header Controls -->
+      <div class="header-controls">
+        <button class="ctrl-btn" id="sound-toggle" onclick="toggleSound()" title="Suara On/Off" aria-label="Toggle Suara">🔊</button>
+        <button class="ctrl-btn" id="dark-toggle" onclick="toggleDark()" title="Dark/Light Mode" aria-label="Toggle Dark Mode">🌙</button>
+        <button class="ctrl-btn" id="fullscreen-btn" onclick="toggleFullscreen()" title="Fullscreen" aria-label="Toggle Fullscreen">⛶</button>
+        <button class="ctrl-btn hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Buka Menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav -->
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Menu Mobile">
+      <button class="nav-btn" onclick="showSection('home');toggleMenu()">🏠 Beranda</button>
+      <button class="nav-btn" onclick="showSection('puzzle');toggleMenu()">🧩 Puzzle</button>
+      <button class="nav-btn" onclick="showSection('huruf');toggleMenu()">🔤 Huruf</button>
+      <button class="nav-btn" onclick="showSection('angka');toggleMenu()">🔢 Angka</button>
+      <button class="nav-btn" onclick="showSection('warna');toggleMenu()">🎨 Warna</button>
+      <button class="nav-btn" onclick="showSection('tebak');toggleMenu()">🖼️ Tebak Gambar</button>
+      <button class="nav-btn" onclick="showSection('hitung');toggleMenu()">➕ Hitung</button>
+      <button class="nav-btn" onclick="showSection('cocok');toggleMenu()">🔗 Cocokkan</button>
+    </nav>
+  </header>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="main-content">
+
+    <!-- ===== SECTION: HOME ===== -->
+    <section id="section-home" class="section active">
+
+      <!-- Hero -->
+      <div class="hero-section">
+        <div class="hero-content">
+          <div class="hero-badge">🎉 Platform Belajar No.1 untuk Anak Indonesia</div>
+          <h1 class="hero-title">Belajar Jadi <span class="highlight-text">Seru!</span> 🚀</h1>
+          <p class="hero-subtitle">Main sambil pintar bersama game edukasi anak Indonesia yang penuh warna dan menyenangkan!</p>
+          <div class="hero-buttons">
+            <button class="btn-primary bounce-btn" onclick="showSection('huruf')">🌟 Mulai Belajar!</button>
+            <button class="btn-secondary" onclick="showSection('puzzle')">🧩 Main Puzzle</button>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item"><span class="stat-num" id="stat-xp">0</span><span class="stat-label">XP</span></div>
+            <div class="stat-divider">|</div>
+            <div class="stat-item"><span class="stat-num" id="stat-level">1</span><span class="stat-label">Level</span></div>
+            <div class="stat-divider">|</div>
+            <div class="stat-item"><span class="stat-num" id="stat-badges">0</span><span class="stat-label">Badge</span></div>
+          </div>
+        </div>
+        <div class="hero-illustration" aria-hidden="true">
+          <div class="hero-character">
+            <div class="char-body">
+              <div class="char-face">😄</div>
+              <div class="char-hat">🎓</div>
+            </div>
+            <div class="char-items">
+              <span class="float-item item1">📚</span>
+              <span class="float-item item2">✏️</span>
+              <span class="float-item item3">🌈</span>
+              <span class="float-item item4">⭐</span>
+              <span class="float-item item5">🎯</span>
+              <span class="float-item item6">🏆</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Daily Challenge -->
+      <div class="daily-challenge-wrap">
+        <div class="daily-challenge-card" id="daily-challenge-card">
+          <div class="dc-icon">📅</div>
+          <div class="dc-content">
+            <h3>Tantangan Hari Ini!</h3>
+            <p id="dc-text">Loading tantangan...</p>
+          </div>
+          <button class="dc-btn" id="dc-btn" onclick="startDailyChallenge()">Mulai!</button>
+        </div>
+      </div>
+
+      <!-- Feature Cards Grid -->
+      <div class="section-title-wrap">
+        <h2 class="section-title">Pilih Aktivitas Belajar 🎮</h2>
+        <p class="section-subtitle">Klik kartu di bawah untuk mulai belajar!</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card card-blue" onclick="showSection('huruf')" role="button" tabindex="0">
+          <div class="card-emoji">🔤</div>
+          <h3>Belajar Huruf</h3>
+          <p>Kenalan sama huruf A-Z dengan cara yang seru!</p>
+          <div class="card-badge">26 Huruf</div>
+        </div>
+        <div class="feature-card card-green" onclick="showSection('angka')" role="button" tabindex="0">
+          <div class="card-emoji">🔢</div>
+          <h3>Belajar Angka</h3>
+          <p>Yuk hitung dari 1 sampai 100!</p>
+          <div class="card-badge">100 Angka</div>
+        </div>
+        <div class="feature-card card-yellow" onclick="showSection('warna')" role="button" tabindex="0">
+          <div class="card-emoji">🎨</div>
+          <h3>Belajar Warna</h3>
+          <p>Kenali semua warna pelangi yang cantik!</p>
+          <div class="card-badge">8 Warna</div>
+        </div>
+        <div class="feature-card card-purple" onclick="showSection('puzzle')" role="button" tabindex="0">
+          <div class="card-emoji">🧩</div>
+          <h3>Puzzle Ceria</h3>
+          <p>Susun gambar dengan drag & drop!</p>
+          <div class="card-badge">3 Kategori</div>
+        </div>
+        <div class="feature-card card-pink" onclick="showSection('tebak')" role="button" tabindex="0">
+          <div class="card-emoji">🖼️</div>
+          <h3>Tebak Gambar</h3>
+          <p>Tebak nama gambar yang tampil!</p>
+          <div class="card-badge">3 Kategori</div>
+        </div>
+        <div class="feature-card card-orange" onclick="showSection('hitung')" role="button" tabindex="0">
+          <div class="card-emoji">➕</div>
+          <h3>Hitung-Hitungan</h3>
+          <p>Latihan penjumlahan, pengurangan & perkalian!</p>
+          <div class="card-badge">3 Operasi</div>
+        </div>
+        <div class="feature-card card-teal" onclick="showSection('cocok')" role="button" tabindex="0">
+          <div class="card-emoji">🔗</div>
+          <h3>Cocokkan Huruf</h3>
+          <p>Pasangkan huruf dengan gambar yang tepat!</p>
+          <div class="card-badge">Drag & Drop</div>
+        </div>
+        <div class="feature-card card-red" onclick="showStatsModal()" role="button" tabindex="0">
+          <div class="card-emoji">📊</div>
+          <h3>Statistik Belajar</h3>
+          <p>Lihat perkembangan belajarmu!</p>
+          <div class="card-badge">Progress</div>
+        </div>
+      </div>
+
+      <!-- Progress & Badges Section -->
+      <div class="gamification-wrap">
+        <div class="progress-card">
+          <h3>🏆 Pencapaianku</h3>
+          <div class="xp-bar-wrap">
+            <div class="xp-label">
+              <span>Level <span id="level-display">1</span></span>
+              <span><span id="xp-display">0</span> / <span id="xp-next-display">100</span> XP</span>
+            </div>
+            <div class="xp-bar-bg">
+              <div class="xp-bar-fill" id="xp-bar-fill" style="width:0%"></div>
+            </div>
+          </div>
+          <div class="stars-row" id="stars-row">
+            <span class="star-empty">⭐</span><span class="star-empty">⭐</span><span class="star-empty">⭐</span>
+            <span class="star-empty">⭐</span><span class="star-empty">⭐</span>
+          </div>
+        </div>
+
+        <div class="badges-card">
+          <h3>🎖️ Badge Saya</h3>
+          <div class="badges-grid" id="badges-grid">
+            <div class="badge-item locked" data-badge="pintar" title="Badge Pintar - Jawab 10 soal benar">🧠<span>Pintar</span></div>
+            <div class="badge-item locked" data-badge="puzzle" title="Badge Puzzle Master - Selesaikan puzzle">🧩<span>Puzzle Master</span></div>
+            <div class="badge-item locked" data-badge="huruf" title="Badge Ahli Huruf - Pelajari semua huruf">🔤<span>Ahli Huruf</span></div>
+            <div class="badge-item locked" data-badge="angka" title="Badge Ahli Angka - Pelajari angka 1-20">🔢<span>Ahli Angka</span></div>
+            <div class="badge-item locked" data-badge="warna" title="Badge Pelukis - Pelajari semua warna">🎨<span>Pelukis</span></div>
+            <div class="badge-item locked" data-badge="matematika" title="Badge Ahli Matematika - Jawab 20 soal">➕<span>Ahli Hitung</span></div>
+            <div class="badge-item locked" data-badge="daily" title="Badge Rajin - Selesaikan daily challenge">📅<span>Rajin</span></div>
+            <div class="badge-item locked" data-badge="cocok" title="Badge Cocokkan - Selesaikan matching game">🔗<span>Pencocok</span></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===== SECTION: PUZZLE ===== -->
+    <section id="section-puzzle" class="section">
+      <div class="section-header">
+        <button class="back-btn" onclick="showSection('home')">← Kembali</button>
+        <h2>🧩 Puzzle Ceria</h2>
+      </div>
+
+      <div class="puzzle-controls">
+        <div class="puzzle-category-select">
+          <label>Pilih Kategori:</label>
+          <div class="category-btns">
+            <button class="cat-btn active" onclick="setPuzzleCategory('hewan')">🐾 Hewan</button>
+            <button class="cat-btn" onclick="setPuzzleCategory('buah')">🍎 Buah</button>
+            <button class="cat-btn" onclick="setPuzzleCategory('kendaraan')">🚗 Kendaraan</button>
+          </div>
+        </div>
+        <div class="puzzle-size-select">
+          <label>Ukuran:</label>
+          <div class="category-btns">
+            <button class="cat-btn active" onclick="setPuzzleSize(4)">2×2</button>
+            <button class="cat-btn" onclick="setPuzzleSize(9)">3×3</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="puzzle-game-wrap">
+        <div class="puzzle-info-bar">
+          <div class="puzzle-stat">⏱️ <span id="puzzle-timer">0</span>s</div>
+          <div class="puzzle-stat">⭐ <span id="puzzle-score">0</span> poin</div>
+          <div class="puzzle-stat">🔄 <span id="puzzle-moves">0</span> langkah</div>
+        </div>
+
+        <div class="puzzle-area">
+          <div class="puzzle-preview">
+            <h4>Contoh Gambar:</h4>
+            <div id="puzzle-preview-img" class="preview-img-box">🐱</div>
+          </div>
+          <div class="puzzle-board-wrap">
+            <div id="puzzle-board" class="puzzle-board"></div>
+            <div class="puzzle-action-btns">
+              <button class="btn-primary" onclick="shufflePuzzle()">🔀 Acak</button>
+              <button class="btn-secondary" onclick="solvePuzzle()">💡 Petunjuk</button>
+              <button class="btn-green" onclick="nextPuzzle()">➡️ Gambar Lain</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION: HURUF ===== -->
+    <section id="section-huruf" class="section">
+      <div class="section-header">
+        <button class="back-btn" onclick="showSection('home')">← Kembali</button>
+        <h2>🔤 Belajar Huruf A-Z</h2>
+      </div>
+
+      <div class="huruf-main">
+        <div class="huruf-display-card" id="huruf-card">
+          <div class="huruf-big" id="huruf-big">A</div>
+          <div class="huruf-contoh" id="huruf-contoh">
+            <span class="contoh-emoji" id="huruf-emoji">🐔</span>
+            <span class="contoh-word" id="huruf-word">Ayam</span>
+          </div>
+          <button class="play-sound-btn" onclick="playHurufSound()" aria-label="Dengar suara huruf">🔊 Dengar</button>
+        </div>
+
+        <div class="huruf-nav">
+          <button class="btn-nav" onclick="prevHuruf()" id="prev-huruf">◀ Sebelumnya</button>
+          <span class="huruf-counter" id="huruf-counter">1 / 26</span>
+          <button class="btn-nav" onclick="nextHuruf()" id="next-huruf">Berikutnya ▶</button>
+        </div>
+
+        <div class="huruf-grid" id="huruf-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION: ANGKA ===== -->
+    <section id="section-angka" class="section">
+      <div class="section-header">
+        <button class="back-btn" onclick="showSection('home')">← Kembali</button>
+        <h2>🔢 Belajar Angka 1-100</h2>
+      </div>
+
+      <div class="angka-main">
+        <div class="angka-display-card" id="angka-card">
+          <div class="angka-big" id="angka-big">1</div>
+          <div class="angka-visual" id="angka-visual">🍎</div>
+          <div class="angka-nama" id="angka-nama">Satu</div>
+          <button class="play-sound-btn" onclick="playAngkaSound()" aria-label="Dengar suara angka">🔊 Dengar</button>
+        </div>
+
+        <div class="angka-nav">
+          <button class="btn-nav" onclick="prevAngka()">◀ Sebelumnya</button>
+          <span class="angka-counter" id="angka-counter">1 / 100</span>
+          <button class="btn-nav" onclick="nextAngka()">Berikutnya ▶</button>
+        </div>
+
+        <div class="angka-range-select">
+          <label>Pilih Rentang:</label>
+          <div class="range-btns">
+            <button class="cat-btn active" onclick="setAngkaRange(1,10)">1-10</button>
+            <button class="cat-btn" onclick="setAngkaRange(1,20)">1-20</button>
+            <button class="cat-btn" onclick="setAngkaRange(1,50)">1-50</button>
+            <button class="cat-btn" onclick="setAngkaRange(1,100)">1-100</button>
+          </div>
+        </div>
+
+        <div class="angka-grid" id="angka-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION: WARNA ===== -->
+    <section id="section-warna" class="section">
+      <div class="section-header">
+        <button class="back-btn" onclick="showSection('home')">← Kembali</button>
+        <h2>🎨 Belajar Warna</h2>
+      </div>
+
+      <div class="warna-overlay" id="warna-overlay"></div>
+
+      <div class="warna-display" id="warna-display">
+        <div class="warna-current-name" id="warna-current-name">Pilih warna di bawah!</div>
+        <div class="warna-current-circle" id="warna-current-circle"></div>
+      </div>
+
+      <div class="warna-grid" id="warna-grid"></div>
+
+      <div class="warna-quiz-wrap">
+        <h3>🎯 Tebak Warnanya!</h3>
+        <div class="warna-quiz-area" id="warna-quiz-area">
+          <div class="quiz-color-box" id="quiz-color-box"></div>
+          <div class="warna-quiz-choices" id="warna-quiz-choices"></div>
+          <div class="quiz-result" id="warna-quiz-result"></div>
+        </div>
+        <button class="btn-primary" onclick="newWarnaQuiz()">🔄 Soal Baru</button>
+      </div>
+    </section>
+
+    <!-- ===== SECTION: TEBAK GAMBAR ===== -->
+    <section id="section-tebak" class="section">
+      <div class="section-header">
+        <button class="back-btn" onclick="showSection('home')">← Kembali</button>
+        <h2>🖼️ Tebak Gambar</h2>
+      </div>
+
+      <div class="tebak-controls">
+        <div class="category-btns">
+          <button class="cat-btn active" onclick="setTebakCategory('hewan')">🐾 Hewan</button>
+          <button class="cat-btn" onclick="setTebakCategory('buah')">🍎 Buah</button>
+          <button class="cat-btn" onclick="setTebakCategory('benda')">📦 Benda</button>
+        </div>
+      </div>
+
+      <div class="tebak-game-wrap">
+        <div class="tebak-info-bar">
+          <div class="tebak-stat">❓ Soal: <span id="tebak-soal-num">1</span></div>
+          <div class="tebak-stat">⭐ Skor: <span id="tebak-score">0</span></div>
+          <div class="tebak-stat">🏆 Benar: <span id="tebak-benar">0</span></div>
+        </div>
+
+        <div class="tebak-card">
+          <div class="tebak-gambar" id="tebak-gambar">🐱</div>
+          <p class="tebak-question">Gambar apa ini?</p>
+          <div class="tebak-choices" id="tebak-choices"></div>
+          <div class="tebak-feedback" id="tebak-feedback"></div>
+        </div>
+
+        <button class="btn-primary" onclick="nextTebakSoal()">➡️ Soal Berikutnya</button>
+      </div>
+    </section>
+
+    <!-- ===== SECTION: HITUNG ===== -->
+    <section id="section-hitung" class="section">
+      <div class="section-header">
+        <button class="back-btn" onclick="showSection('home')">← Kembali</button>
+        <h2>➕ Hitung-Hitungan</h2>
+      </div>
+
+      <div class="hitung-controls">
+        <div class="category-btns">
+          <button class="cat-btn active" onclick="setHitungType('tambah')">➕ Penjumlahan</button>
+          <button class="cat-btn" onclick="setHitungType('kurang')">➖ Pengurangan</button>
+          <button class="cat-btn" onclick="setHitungType('kali')">✖️ Perkalian</button>
+          <button class="cat-btn" onclick="setHitungType('acak')">🎲 Acak</button>
+        </div>
+      </div>
+
+      <div class="hitung-game-wrap">
+        <div class="hitung-info-bar">
+          <div class="hitung-stat">⭐ Skor: <span id="hitung-score">0</span></div>
+          <div class="hitung-stat">✅ Benar: <span id="hitung-benar">0</span></div>
+          <div class="hitung-stat">❌ Salah: <span id="hitung-salah">0</span></div>
+          <div class="hitung-stat">🔢 Soal: <span id="hitung-soal">0</span></div>
+        </div>
+
+        <div class="hitung-card">
+          <div class="hitung-visual" id="hitung-visual">🍎🍎 + 🍎🍎🍎</div>
+          <div class="hitung-soal-display" id="hitung-soal-display">2 + 3 = ?</div>
+          <div class="hitung-choices" id="hitung-choices"></div>
+          <div class="hitung-feedback" id="hitung-feedback"></div>
+        </div>
+
+        <button class="btn-primary" onclick="newHitungSoal()">🔄 Soal Baru</button>
+      </div>
+    </section>
+
+    <!-- ===== SECTION: COCOKKAN ===== -->
+    <section id="section-cocok" class="section">
+      <div class="section-header">
+        <button class="back-btn" onclick="showSection('home')">← Kembali</button>
+        <h2>🔗 Cocokkan Huruf & Gambar</h2>
+      </div>
+
+      <div class="cocok-info">
+        <p>Seret huruf ke gambar yang tepat! 🎯</p>
+        <div class="cocok-stat-bar">
+          <div class="cocok-stat">⭐ Skor: <span id="cocok-score">0</span></div>
+          <div class="cocok-stat">✅ Cocok: <span id="cocok-match">0</span> / <span id="cocok-total">6</span></div>
+        </div>
+      </div>
+
+      <div class="cocok-game-wrap" id="cocok-game-wrap">
+        <div class="cocok-left">
+          <h4>Huruf (Seret ke gambar)</h4>
+          <div class="cocok-letters" id="cocok-letters"></div>
+        </div>
+        <div class="cocok-right">
+          <h4>Gambar (Taruh huruf di sini)</h4>
+          <div class="cocok-images" id="cocok-images"></div>
+        </div>
+      </div>
+
+      <div class="cocok-actions">
+        <button class="btn-primary" onclick="checkCocokkan()">✅ Cek Jawaban</button>
+        <button class="btn-secondary" onclick="resetCocokkan()">🔄 Ulang</button>
+        <button class="btn-green" onclick="newCocokRound()">➡️ Ronde Baru</button>
+      </div>
+      <div class="cocok-feedback" id="cocok-feedback"></div>
+    </section>
+
+  </main>
+
+  <!-- ========== MODAL: STATS ========== -->
+  <div class="modal-overlay" id="stats-modal" role="dialog" aria-modal="true" aria-label="Statistik Belajar">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('stats-modal')">✕</button>
+      <h2>📊 Statistik Belajarku</h2>
+      <div class="stats-grid" id="stats-grid"></div>
+      <button class="btn-danger" onclick="confirmResetProgress()">🗑️ Reset Progress</button>
+    </div>
+  </div>
+
+  <!-- ========== MODAL: WIN ========== -->
+  <div class="modal-overlay" id="win-modal" role="dialog" aria-modal="true" aria-label="Selamat">
+    <div class="modal-content win-modal-content">
+      <div class="win-emoji">🎉</div>
+      <h2 id="win-title">Luar Biasa!</h2>
+      <p id="win-message">Kamu berhasil!</p>
+      <div class="win-xp" id="win-xp">+10 XP</div>
+      <div class="win-badge-earned" id="win-badge-earned"></div>
+      <button class="btn-primary" onclick="closeModal('win-modal')">🌟 Lanjutkan!</button>
+    </div>
+  </div>
+
+  <!-- ========== MODAL: DAILY CHALLENGE ========== -->
+  <div class="modal-overlay" id="daily-modal" role="dialog" aria-modal="true" aria-label="Tantangan Harian">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('daily-modal')">✕</button>
+      <h2>📅 Tantangan Hari Ini!</h2>
+      <div id="daily-challenge-content"></div>
+    </div>
+  </div>
+
+  <!-- ========== TOAST NOTIFICATION ========== -->
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="main-footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <div class="footer-logo">🌟 CeriaBelajar</div>
+        <p>Platform belajar interaktif yang menyenangkan untuk anak Indonesia usia TK hingga SD.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Tentang Website</h4>
+        <p>CeriaBelajar adalah aplikasi edukasi berbasis web yang dirancang khusus untuk membantu anak-anak belajar sambil bermain.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Kontak</h4>
+        <p>📧 halo@ceriabelajar.id</p>
+        <p>📱 Instagram: @CeriaBelajar</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>🌈 "Belajar itu menyenangkan!" 🌈</p>
+      <p>© 2025 CeriaBelajar. Dibuat dengan ❤️ untuk anak Indonesia.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
